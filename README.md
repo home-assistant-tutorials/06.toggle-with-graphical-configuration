@@ -145,12 +145,13 @@ We use `focusout` events to trigger the update of the underlying model.
     }
 ```
 
-See previous tutorial for the importance of binding the current context.
+See previous tutorials for the importance of binding the current context.
 
 ```js
     onChanged(event) {
-        console.log("editor.onChanged()")
-        this.doMessageForUpdate(event)
+        console.log("editor.onChanged()");
+        this.doMessageForUpdate(event);
+    }
 ```
 
 We use a general entrypoint for both events which calls a general job to handle
