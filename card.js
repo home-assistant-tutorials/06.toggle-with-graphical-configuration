@@ -1,5 +1,4 @@
 class ToggleWithGraphicalConfiguration extends HTMLElement {
-
     // private properties
     _config;
     _hass;
@@ -23,7 +22,7 @@ class ToggleWithGraphicalConfiguration extends HTMLElement {
 
     set hass(hass) {
         this._hass = hass;
-        this.doUpdateHass()
+        this.doUpdateHass();
     }
 
     onClicked() {
@@ -32,11 +31,11 @@ class ToggleWithGraphicalConfiguration extends HTMLElement {
 
     // accessors
     isOff() {
-        return this.getState().state === 'off';
+        return this.getState().state === "off";
     }
 
     isOn() {
-        return this.getState().state === 'on';
+        return this.getState().state === "on";
     }
 
     getHeader() {
@@ -52,7 +51,7 @@ class ToggleWithGraphicalConfiguration extends HTMLElement {
     }
 
     getAttributes() {
-        return this.getState().attributes
+        return this.getState().attributes;
     }
 
     getName() {
@@ -63,7 +62,7 @@ class ToggleWithGraphicalConfiguration extends HTMLElement {
     // jobs
     doCheckConfig() {
         if (!this._config.entity) {
-            throw new Error('Please define an entity!');
+            throw new Error("Please define an entity!");
         }
     }
 
@@ -85,7 +84,6 @@ class ToggleWithGraphicalConfiguration extends HTMLElement {
                 </div>
         `;
     }
-
 
     doStyle() {
         this._elements.style = document.createElement("style");
@@ -131,7 +129,7 @@ class ToggleWithGraphicalConfiguration extends HTMLElement {
                 align-content: center;
                 flex-wrap: wrap;
             }
-        `
+        `;
     }
 
     doAttach() {
@@ -141,15 +139,19 @@ class ToggleWithGraphicalConfiguration extends HTMLElement {
 
     doQueryElements() {
         const card = this._elements.card;
-        this._elements.error = card.querySelector(".error")
-        this._elements.dl = card.querySelector(".dl")
-        this._elements.topic = card.querySelector(".dt")
-        this._elements.toggle = card.querySelector(".toggle")
-        this._elements.value = card.querySelector(".value")
+        this._elements.error = card.querySelector(".error");
+        this._elements.dl = card.querySelector(".dl");
+        this._elements.topic = card.querySelector(".dt");
+        this._elements.toggle = card.querySelector(".toggle");
+        this._elements.value = card.querySelector(".value");
     }
 
     doListen() {
-        this._elements.dl.addEventListener("click", this.onClicked.bind(this), false);
+        this._elements.dl.addEventListener(
+            "click",
+            this.onClicked.bind(this),
+            false
+        );
     }
 
     doUpdateConfig() {
@@ -182,8 +184,8 @@ class ToggleWithGraphicalConfiguration extends HTMLElement {
     }
 
     doToggle() {
-        this._hass.callService('input_boolean', 'toggle', {
-            entity_id: this.getEntityID()
+        this._hass.callService("input_boolean", "toggle", {
+            entity_id: this.getEntityID(),
         });
     }
 
@@ -195,14 +197,12 @@ class ToggleWithGraphicalConfiguration extends HTMLElement {
     static getStubConfig() {
         return {
             entity: "input_boolean.twgc",
-            header: ""
-        }
+            header: "",
+        };
     }
-
 }
 
 class ToggleWithGraphicalConfigurationEditor extends HTMLElement {
-
     // private properties
     _config;
     _hass;
@@ -211,7 +211,7 @@ class ToggleWithGraphicalConfigurationEditor extends HTMLElement {
     // lifecycle
     constructor() {
         super();
-        console.log("editor:constructor()")
+        console.log("editor:constructor()");
         this.doEditor();
         this.doStyle();
         this.doAttach();
@@ -220,24 +220,23 @@ class ToggleWithGraphicalConfigurationEditor extends HTMLElement {
     }
 
     setConfig(config) {
-        console.log("editor:setConfig()")
+        console.log("editor:setConfig()");
         this._config = config;
         this.doUpdateConfig();
     }
 
     set hass(hass) {
-        console.log("editor.hass()")
+        console.log("editor.hass()");
         this._hass = hass;
         this.doUpdateHass();
     }
 
     onChanged(event) {
-        console.log("editor.onChanged()")
-        this.doMessageForUpdate(event)
+        console.log("editor.onChanged()");
+        this.doMessageForUpdate(event);
     }
 
     // jobs
-
     doEditor() {
         this._elements.editor = document.createElement("form");
         this._elements.editor.innerHTML = `
@@ -259,7 +258,7 @@ class ToggleWithGraphicalConfigurationEditor extends HTMLElement {
                 display: table-cell;
                 padding: 0.5em;
             }
-        `
+        `;
     }
 
     doAttach() {
@@ -268,13 +267,19 @@ class ToggleWithGraphicalConfigurationEditor extends HTMLElement {
     }
 
     doQueryElements() {
-        this._elements.header = this._elements.editor.querySelector("#header")
-        this._elements.entity = this._elements.editor.querySelector("#entity")
+        this._elements.header = this._elements.editor.querySelector("#header");
+        this._elements.entity = this._elements.editor.querySelector("#entity");
     }
 
     doListen() {
-        this._elements.header.addEventListener("focusout", this.onChanged.bind(this));
-        this._elements.entity.addEventListener("focusout", this.onChanged.bind(this));
+        this._elements.header.addEventListener(
+            "focusout",
+            this.onChanged.bind(this)
+        );
+        this._elements.entity.addEventListener(
+            "focusout",
+            this.onChanged.bind(this)
+        );
     }
 
     doUpdateConfig() {
@@ -282,16 +287,14 @@ class ToggleWithGraphicalConfigurationEditor extends HTMLElement {
         this._elements.entity.value = this._config.entity;
     }
 
-    doUpdateHass() {
-    }
+    doUpdateHass() { }
 
     doMessageForUpdate(changedEvent) {
         // this._config is readonly, copy needed
         const newConfig = Object.assign({}, this._config);
         if (changedEvent.target.id == "header") {
             newConfig.header = changedEvent.target.value;
-        }
-        else if (changedEvent.target.id == "entity") {
+        } else if (changedEvent.target.id == "entity") {
             newConfig.entity = changedEvent.target.value;
         }
         const messageEvent = new CustomEvent("config-changed", {
@@ -301,15 +304,20 @@ class ToggleWithGraphicalConfigurationEditor extends HTMLElement {
         });
         this.dispatchEvent(messageEvent);
     }
-
 }
 
-customElements.define('toggle-with-graphical-configuration', ToggleWithGraphicalConfiguration);
-customElements.define('toggle-with-graphical-configuration-editor', ToggleWithGraphicalConfigurationEditor);
+customElements.define(
+    "toggle-with-graphical-configuration",
+    ToggleWithGraphicalConfiguration
+);
+customElements.define(
+    "toggle-with-graphical-configuration-editor",
+    ToggleWithGraphicalConfigurationEditor
+);
 
 window.customCards = window.customCards || [];
 window.customCards.push({
     type: "toggle-with-graphical-configuration",
     name: "Toggle with graphical configuration (Vanilla JS)",
-    description: "Turn an entity on and off"
+    description: "Turn an entity on and off",
 });
