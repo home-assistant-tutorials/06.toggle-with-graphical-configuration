@@ -177,7 +177,7 @@ of the underlying model.
     }
 ```
 
-This method is a little more complex. The original configuration is write
+This function is a little more complex. The original configuration is write
 protected. We create a copy to send it along with the custom event. Then we have
 to switch between the two events we have been listening for *header* and
 *entity*. Finally we create the new custom event and dispatch it.
