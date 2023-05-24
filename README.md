@@ -27,7 +27,7 @@ focus upon the differences.
 
 In this tutorial we still want to avoid dependencies from external libraries to
 learn about the minimal requirements. The downside is, the we don't get the full
-comfort of the homeassistant inbuilt forms. This may be the topic of a future
+comfort of the Home Assistant inbuilt forms. This may be the topic of a future
 howto. We also do our own minimalistic styling.
 
 ## Prerequisites
